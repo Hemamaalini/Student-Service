@@ -13,7 +13,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +54,7 @@ public class StudentService {
             entity.setDepartment(model.getDepartment());
             entity.setActive(model.isActive());
             entity.setCreatedTimeStamp(LocalDateTime.now());
+            entity.setUpdatedTimeStamp(LocalDateTime.now());
             entity = studentRepo.save(entity);
             model.setId(entity.getId());
             model.setCreatedTimeStamp(entity.getCreatedTimeStamp());
@@ -153,6 +157,23 @@ public class StudentService {
             return studentRepo.findByActiveFalse();
         }
     }
+
+    public ResponseEntity<?> getValueByDate(String startDate, String endDate){
+        final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date1 = LocalDate.parse(startDate,FORMATTER);
+
+        if(endDate==null||endDate.isBlank()) {
+
+            List<StudentEntity> student1 = studentRepo.findBySingleDate(date1);
+            return ResponseEntity.ok(student1);
+        }
+        else {
+            LocalDate date2 = LocalDate.parse(endDate,FORMATTER);
+            List<StudentEntity> students = studentRepo.findByTwoDate(date1, date2);
+            return ResponseEntity.ok(students);
+        }
+    }
+
     public String deleteByValue(int id){
         StudentEntity student = studentRepo.findById(id)
                 .orElseThrow(() -> new ResourceAccessException("Student not exist with Id: " + id));

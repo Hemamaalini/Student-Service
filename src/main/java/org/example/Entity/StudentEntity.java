@@ -1,11 +1,9 @@
 package org.example.Entity;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 
 @Data
 @Entity
@@ -39,9 +37,5 @@ public class StudentEntity {
     @JsonFormat(pattern="yyyy-MMM-dd hh:mm:a")
     private LocalDateTime updatedTimeStamp;
 
-
-// @Temporal(TemporalType.TIMESTAMP)
-   /* @Column(nullable = false, updatable = false)
-    private LocalDateTime currentTime = LocalDateTime.now();*/
 }
 

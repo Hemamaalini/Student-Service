@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -50,6 +52,10 @@ public class StudentController {
     public List<StudentEntity> getByStatus(@RequestParam(required = false) Boolean status){
 
         return studentService.getActiveStudents(status);
+    }
+    @GetMapping("/getValueByDate")
+    public ResponseEntity<?> getValueByDate(@RequestParam String startDate, String endDate){
+        return studentService.getValueByDate(startDate, endDate);
     }
     @DeleteMapping("/deleteByValue/{id}")
     public String deleteByValue(@PathVariable int id){
