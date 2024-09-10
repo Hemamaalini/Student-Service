@@ -20,7 +20,7 @@ import java.util.List;
 @Service
 @Data
 public class StudentService {
-//    this class is used for service
+//    this class is used for service sndbfsdf
     @Autowired
     public StudentRepo studentRepo;
 
